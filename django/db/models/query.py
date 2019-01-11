@@ -231,10 +231,17 @@ class QuerySet(object):
         self.__dict__.update(state)
 
     def __repr__(self):
-        data = list(self[:REPR_OUTPUT_SIZE + 1])
-        if len(data) > REPR_OUTPUT_SIZE:
-            data[-1] = "...(remaining elements truncated)..."
-        return repr(data)
+        """
+        20180831 HYPERCONNECT FIX
+
+        issue: https://hyperconnect.atlassian.net/browse/WP-96
+        Origin:
+            data = list(self[:REPR_OUTPUT_SIZE + 1])
+            if len(data) > REPR_OUTPUT_SIZE:
+                data[-1] = "...(remaining elements truncated)..."
+            return repr(data)
+        """
+        return "<QuerySet: %s>" % self.query
 
     def __len__(self):
         self._fetch_all()
